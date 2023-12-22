@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Kreiraj dir') {
+        stage('Create Dir') {
             steps {
                 script {
                     dir("${params.directoryName}") {
@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Kreiranje na file i editiranje vo fajlot') {
+        stage('Create file and file editing/permissions') {
             steps {
                 script {
                     writeFile file: "${params.directoryName}/${params.fileName}", text: 'Random string'
@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Promena na dozvoli') {
+        stage('Change perm') {
             steps {
                 script {
                     sh "chmod +x ${params.directoryName}/${params.fileName}"
@@ -32,7 +32,7 @@ pipeline {
             }
         }
 
-        stage('Copy na file na dr lokacija') {
+        stage('Copy the file onm dof location') {
             steps {
                 script {
                     sh "cp ${params.directoryName}/${params.fileName} /pateka/do/destinacija/"
@@ -40,7 +40,7 @@ pipeline {
             }
         }
 
-        stage('Printanje na raboti od file') {
+        stage('Print file content') {
             steps {
                 script {
                     sh "cat /pateka/do/destinacija/${params.fileName}"
