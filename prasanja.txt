@@ -1,0 +1,157 @@
+1. 
+
+- hosts: worker1
+  tasks:
+    - name: Kreiraj new_testdir directory
+      file:
+        path: /pateka/do/new_testdir
+        state: directory
+        mode: "u=rwx,g=rx,o="
+    - name: Kreiraj nov file i promeni perms
+      copy:
+        content: "Nekoj tekst"
+        dest: /pateka/do/new_testdir/new_file.txt
+        mode: "u=--x,g=rw,o=rwx"
+
+
+2. 
+
+sudo useradd -m new_user
+sudo usermod -aG docker new_user
+
+3. 
+
+docker logs container_name
+
+4. 
+
+- Сопственоста на копираната датотека че биди root:root, а датотеката че се копира од контролната машина до серверите на апликацијата.
+
+5. 
+
+- hosts: EU-west
+  tasks:
+    - name: Install openssl-server package
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      apt:
+        name: openssl-server
+        state: present
+      become: true
+
+
+6. 
+
+- hosts: EU-west
+  tasks:
+    - name: Golang
+      get_url:
+        url: "https://storage.googleapis.com/golang/go1.17.1.linux-amd64.tar.gz"
+        dest: /tmp/go1.17.1.linux-amd64.tar.gz
+
+    - name: Extract Golang
+      unarchive:
+        src: /tmp/go1.17.1.linux-amd64.tar.gz
+        dest: /usr/local
+
+
+7. 
+
+- hosts: EU-west
+  tasks:
+    - name: Firewall na port 22 i port 80
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        state: enabled
+      with_items:
+        - 22
+        - 80
+
+
+8. 
+
+docker exec -it kibana_container_name /bin/bash
+
+9. 
+
+docker exec -it logstash_container_name /bin/bash
+
+
+10. 
+
+docker run -d -v /pateka/do/host/logstash.conf:/etc/logstash/conf.d/logstash.conf --name my_logstash_container logstash:latest
+
+
+11. 
+
+Jenkinsfile нема успешно да ја отпечати променлива env. Затоа што секоја команда sh работи во сопствената под-школка, а променливите на околината поставени во едната школка нема да опстојуваат на следната. Затоа $TESTENV нема да биде достапен во следниот чекор sh.
+
+12.
+
+
+Dockerfile-от има две инстанци за ENTRYPOINT и CMD, овој фајл не е валиден бидејчи може да има само по една инстанца од командите во овој случај и че се извршат само последните4 ENTRYPOINT и CMD.
+
+13.
+
+Си промената на линија 4 docker че ги изврши сите команди после неа и че го поништи кешот со што сите команди треба повторно да се извршат.
+
+
+14.
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'directoryName', defaultValue: 'newdir', description: 'Nekoja deskripcija za Jenkinsfile')
+        string(name: 'fileName', defaultValue: 'newfile.txt', description: 'Isto')
+    }
+
+    stages {
+        stage('Kreiraj dir') {
+            steps {
+                script {
+                    dir("${params.directoryName}") {
+                    }
+                }
+            }
+        }
+
+        stage('Kreiranje na file i editiranje vo fajlot') {
+            steps {
+                script {
+                    writeFile file: "${params.directoryName}/${params.fileName}", text: 'Random string'
+                }
+            }
+        }
+
+        stage('Promena na dozvoli') {
+            steps {
+                script {
+                    sh "chmod +x ${params.directoryName}/${params.fileName}"
+                }
+            }
+        }
+
+        stage('Copy na file na dr lokacija') {
+            steps {
+                script {
+                    sh "cp ${params.directoryName}/${params.fileName} /pateka/do/destinacija/"
+                }
+            }
+        }
+
+        stage('Printanje na raboti od file') {
+            steps {
+                script {
+                    sh "cat /pateka/do/destinacija/${params.fileName}"
+                }
+            }
+        }
+    }
+}
+
+
+
+15.
+
+Jenkinsfile нема успешно да ја отпечати променлива env. Затоа што секоја команда sh во Jenkins работи во сопствената под-школка, а променливите на околината поставени во едната школка нема да опстојуваат на следната. Затоа, $TESTENV нема да биде достапен во следниот чекор sh.

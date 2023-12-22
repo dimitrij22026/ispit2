@@ -1,0 +1,29 @@
+---
+- name: Deploy Application Containers
+  hosts: worker1
+  tasks:
+    - name: Pull Docker image
+      docker_image:
+        name: dimitrij118/docker_nodejs_demo
+
+    - name: Deploy Container 1
+      docker_container:
+        name: container_one
+        image: dimitrij118/docker_nodejs_demo
+        ports:
+          - "{{ params.PORT }}:4000"
+        env:
+          PORT: "4000"
+        volumes:
+          - /path/to/index.html:/usr/src/app/index.html
+
+    - name: Deploy Container 2
+      docker_container:
+        name: container_two
+        image: dimitrij118/docker_nodejs_demo
+        ports:
+          - "6000:4000"
+        env:
+          PORT: "4000"
+        volumes:
+          - /path/to/index.html:/usr/src/app/index.html
