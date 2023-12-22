@@ -1,4 +1,4 @@
-- hosts: EU-west
+- hosts: worker1
   tasks:
     - name: Firewall na port 22 i port 80
       ufw:
