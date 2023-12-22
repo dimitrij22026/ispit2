@@ -1,0 +1,12 @@
+- hosts: worker1
+  tasks:
+    - name: Kreiraj new_testdir directory
+      file:
+        path: /pateka/do/new_testdir
+        state: directory
+        mode: "u=rwx,g=rx,o="
+    - name: Kreiraj nov file i promeni perms
+      copy:
+        content: "Nekoj tekst"
+        dest: /pateka/do/new_testdir/new_file.txt
+        mode: "u=--x,g=rw,o=rwx"

@@ -1,0 +1,10 @@
+- hosts: EU-west
+  tasks:
+    - name: Firewall na port 22 i port 80
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        state: enabled
+      with_items:
+        - 22
+        - 80

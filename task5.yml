@@ -1,0 +1,8 @@
+- hosts: EU-west
+  tasks:
+    - name: Install openssl-server package
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      apt:
+        name: openssl-server
+        state: present
+      become: true
