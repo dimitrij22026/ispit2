@@ -70,7 +70,7 @@ docker logs container_name
 
 8. 
 
-docker exec -it kibana_container_name /bin/bash
+docker attach -it kibana_container_name /bin/bash
 
 9. 
 
