@@ -1,25 +1,27 @@
----
-- name: Deploy Application Containers
-  hosts: worker1
-  tasks:
-    - name: Pull Docker image
-      docker_image:
-        name: slikaeden
 
-    - name: Deploy Container 1
-      docker_container:
-        name: container_one
-        image: slikaeden
-        ports:
-          - "5000:4000"
-        env:
-          PORT: "4000"
+name: Pull Docker image
+    docker_image:
+      name: "dimitrij118/docker_nodejs"
+      source: pull
 
-    - name: Deploy Container 2
-      docker_container:
-        name: container_two
-        image: slikaeden
-        ports:
-          - "6000:4000"
-        env:
-          PORT: "4000"
+    
+name: Run Docker container 1
+    docker_container:
+      name: nodejs_app_1
+      image: "dimitrij118/docker_nodejs"
+      ports:
+"{{ app_port }}:4000"
+    env:
+      PORT: "{{ app_port }}"
+      DATA_TEXT: "{{ data_text }}"
+
+    
+name: Run Docker container 2
+    docker_container:
+      name: nodejs_app_2
+      image: "dimitrij118/docker_nodejs"
+      ports:
+"{{ app_port + 1000 }}:4000"
+    env:
+      PORT: "{{ app_port + 1000 }}"
+      DATA_TEXT: "{{ data_text }}"

@@ -1,26 +1,27 @@
 pipeline {
     agent any
-
-    environment {
-        SLIKA_EDEN = "slikaeden"
+    parameters{
+		string(name: 'DATA_TEXT', defaultValue: 'latest', description: 'Docker image version')
+		string(name: 'PORT', defaultValue: 'latest', description: 'Docker image version')
     }
-
     stages {
         stage('Build') {
-            steps {
-                script {
-                    sh 'docker build -t $SLIKA_EDEN .'
+            steps { 
+                sh 'docker build -t dimitrij118/docker_nodejs .'
                 }
             }
         }
 
-        stage('Push') {
+        stage('Build and Push Docker Image') {
             steps {
-                script {
-                    sh 'docker push $SLIKA_EDEN'
+                withCredentials([usernamePassword(credentialsId: ‘dockercreds’, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                    sh " docker push dimitrij118/docker_nodejs"
+                    sh "docker logout"
                 }
             }
         }
+
 
         stage('Deploy') {
             steps {

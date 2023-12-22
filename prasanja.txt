@@ -16,8 +16,8 @@
 
 2. 
 
-sudo useradd -m new_user
-sudo usermod -aG docker new_user
+sudo adduser -m dimitrij_new
+sudo usermod -aG docker dimitrij_new
 
 3. 
 
@@ -25,7 +25,7 @@ docker logs container_name
 
 4. 
 
-- Сопственоста на копираната датотека че биди root:root, а датотеката че се копира од контролната машина до серверите на апликацијата.
+- Сопственоста на копираната датотека че биди root:root, а датотеката че се копира од app_servers.
 
 5. 
 
@@ -79,12 +79,12 @@ docker exec -it logstash_container_name /bin/bash
 
 10. 
 
-docker run -d -v /pateka/do/host/logstash.conf:/etc/logstash/conf.d/logstash.conf --name my_logstash_container logstash:latest
+docker run -d -v /home/dimitrij/logstash.conf:/etc/logstash/conf.d/logstash.conf --name my_logstash_container logstash:latest
 
 
 11. 
 
-Jenkinsfile нема успешно да ја отпечати променлива env. Затоа што секоја команда sh работи во сопствената под-школка, а променливите на околината поставени во едната школка нема да опстојуваат на следната. Затоа $TESTENV нема да биде достапен во следниот чекор sh.
+Jenkinsfile нема успешно да ја отпечати променлива env поради skope  на комадни, $TESTENV нема да биде достапен во следниот чекор sh.
 
 12.
 
@@ -154,4 +154,4 @@ pipeline {
 
 15.
 
-Jenkinsfile нема успешно да ја отпечати променлива env. Затоа што секоја команда sh во Jenkins работи во сопствената под-школка, а променливите на околината поставени во едната школка нема да опстојуваат на следната. Затоа, $TESTENV нема да биде достапен во следниот чекор sh.
+Jenkinsfile нема успешно да ја отпечати променлива env поради skope  на комадни, $TESTENV нема да биде достапен во следниот чекор sh.
