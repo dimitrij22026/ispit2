@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SLIKA_EDEN = "dimitrij118/docker_nodejs"
+        SLIKA_EDEN = "slikaeden"
     }
 
     stages {

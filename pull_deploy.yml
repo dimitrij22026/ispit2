@@ -4,12 +4,12 @@
   tasks:
     - name: Pull Docker image
       docker_image:
-        name: dimitrij118/docker_nodejs
+        name: slikaeden
 
     - name: Deploy Container 1
       docker_container:
         name: container_one
-        image: dimitrij118/docker_nodejs
+        image: slikaeden
         ports:
           - "5000:4000"
         env:
@@ -18,7 +18,7 @@
     - name: Deploy Container 2
       docker_container:
         name: container_two
-        image: dimitrij118/docker_nodejs
+        image: slikaeden
         ports:
           - "6000:4000"
         env:
