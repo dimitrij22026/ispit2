@@ -1,12 +1,13 @@
 - hosts: worker1
   tasks:
-    - name: Kreiraj new_testdir directory
+    - name: Create new_testdir directory
       file:
-        path: /pateka/do/new_testdir
+        path: /home/user/new_testdir
         state: directory
         mode: "u=rwx,g=rx,o="
-    - name: Kreiraj nov file i promeni perms
+
+    - name: Create and set permissions for new_file.txt
       copy:
-        content: "Nekoj tekst"
-        dest: /pateka/do/new_testdir/new_file.txt
+        content: "Some text"
+        dest: /home/user/new_testdir/new_file.txt
         mode: "u=--x,g=rw,o=rwx"
