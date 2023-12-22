@@ -3,8 +3,8 @@ WORKDIR /app
 COPY package.json .
 COPY app.js .
 RUN npm install
-RUN useradd -ms /bin/bash dimitrijp
-USER dimitrijp
+RUN useradd -ms /bin/bash worker1
+USER worker1
 EXPOSE ${PORT}
 ENV PORT=${PORT}
 ENV DATA_TEXT=${DATA_TEXT}
