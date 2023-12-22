@@ -11,11 +11,9 @@
         name: container_one
         image: dimitrij118/docker_nodejs_demo
         ports:
-          - "{{ params.PORT }}:4000"
+          - "5000:4000"
         env:
           PORT: "4000"
-        volumes:
-          - /path/to/index.html:/usr/src/app/index.html
 
     - name: Deploy Container 2
       docker_container:
@@ -25,5 +23,3 @@
           - "6000:4000"
         env:
           PORT: "4000"
-        volumes:
-          - /path/to/index.html:/usr/src/app/index.html
