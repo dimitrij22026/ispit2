@@ -8,9 +8,7 @@ ENV DATA_TEXT=${DATA_TEXT}
 
 WORKDIR /app
 
-COPY package.json .
-
-COPY app.js .
+COPY package.json app.js .
 
 RUN useradd -ms /bin/bash worker1
 
